@@ -1,0 +1,56 @@
+{
+  "name": "meteorite_fm",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "lint": "eslint .",
+    "pretest": "npm run lint --silent"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "allowImportExportEverywhere": true
+    },
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended"
+    ],
+    "settings": {
+      "import/resolver": "meteor"
+    },
+    "rules": {}
+  },
+  "dependencies": {
+    "babel-runtime": "6.18.0",
+    "bcrypt": "^1.0.1",
+    "material-ui": "^0.16.5",
+    "meteor-node-stubs": "~0.2.0",
+    "react": "~15.3.0",
+    "react-addons-pure-render-mixin": "~15.3.0",
+    "react-datepicker": "^0.34.0",
+    "react-dom": "~15.3.0",
+    "react-komposer": "^1.7.1",
+    "react-router": "^2.0.1",
+    "react-tap-event-plugin": "^1.0.0",
+    "react-addons-css-transition-group": "~15.3.0",
+    "react-addons-create-fragment": "~15.3.0",
+    "react-addons-transition-group": "~15.3.0",
+    "react-addons-shallow-compare": "~15.3.0",
+    "react-addons-update": "~15.3.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-import-resolver-meteor": "^0.3.4",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "2.2.3",
+    "eslint-plugin-meteor": "^4.0.1",
+    "eslint-plugin-react": "^6.8.0",
+    "mocha": "^2.5.3"
+  }
+}
