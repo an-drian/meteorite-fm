@@ -2,6 +2,7 @@ import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
 // import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import AppTopNavBar from '../components/main_navigation/AppTopNavBar';
 // Needed for onTouchTap
@@ -36,6 +37,7 @@ const App = ({ children }) => (
       <AppTopNavBar />
       <div className="container">{children}</div>
     </div>
+
   </MuiThemeProvider>
 );
 
