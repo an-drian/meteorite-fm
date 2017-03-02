@@ -25,6 +25,7 @@ export default class SignInWrap extends TrackerReact(Component) {
       lastName: this.lname.input.value,
     }, (error) => {
       if (error) {
+        console.log(error);
         Bert.alert(error.reason, 'reason');
       } else {
         Bert.alert('Account was successfully created', 'Success');

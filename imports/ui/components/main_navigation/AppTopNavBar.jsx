@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
-// import { browserHistory, Link } from 'react-router';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import { Link } from 'react-router';
+import { AppBar, Drawer } from 'material-ui';
+import { List, ListItem } from 'material-ui/List';
+import ListIco from 'material-ui/svg-icons/action/list';
+import QueueMusicIco from 'material-ui/svg-icons/av/queue-music';
 import UnloggedBtn from './UnloggedBtn';
 import LoggedBtn from './LoggedBtn';
 import logout from '../../../modules/logout';
@@ -39,11 +40,11 @@ export default class AppTopNavBar extends TrackerReact(Component) {
       );
     }
     return (
-      unloggedButtons.map((item, index) => {
-        return (<UnloggedBtn key={index} route={item.route} label={item.label} />);
-      })
+      unloggedButtons.map((item, index) =>
+        (<UnloggedBtn key={index} route={item.route} label={item.label} />))
     );
   };
+
   render() {
     return (
       <div>
@@ -58,10 +59,16 @@ export default class AppTopNavBar extends TrackerReact(Component) {
             docked={false}
             width={300}
             open={this.state.leftMenuOpened}
-            onRequestChange={(leftMenuOpened) => this.setState({ leftMenuOpened })}
+            onRequestChange={(leftMenuOpened) => { this.setState({ leftMenuOpened }); }}
           >
-            <MenuItem>Menu Item</MenuItem>
-            <MenuItem>Menu Item 2</MenuItem>
+            <List>
+              <Link className="sidebar-link" to={'/categories'} >
+                <ListItem primaryText="Categories" leftIcon={<ListIco />} />
+              </Link>
+              <Link className="sidebar-link" to={'/stations'}>
+                <ListItem primaryText="Stations" leftIcon={<QueueMusicIco />} />
+              </Link>
+            </List>
           </Drawer>
         </div>
       </div>

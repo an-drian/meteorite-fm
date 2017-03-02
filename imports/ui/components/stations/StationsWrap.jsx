@@ -8,7 +8,7 @@ export default class StationsWrap extends TrackerReact(Component) {
   render() {
     return (
       <div>
-        TrackerReact(Component)
+        <h1> Stations </h1>
       </div>
     );
   }
