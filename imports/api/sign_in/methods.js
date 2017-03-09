@@ -20,6 +20,9 @@ export const signIn = new ValidatedMethod({
       lastName,
       firstName,
     };
+    if (!email || !password || !firstName || !lastName) {
+      throw new Meteor.Error('not-valid', 'All fields are required, server error');
+    }
     if (Meteor.isServer) {
       Accounts.createUser({
         email: email.toLowerCase(),
