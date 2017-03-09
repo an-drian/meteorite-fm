@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { TextField, RaisedButton }from 'material-ui';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
-import { Bert } from 'meteor/themeteorchef:bert';
+import notify from '../../helpers/notification';
 import { signIn } from '../../../api/sign_in/methods';
 
 const style = {
@@ -18,22 +18,27 @@ export default class SignInWrap extends TrackerReact(Component) {
   };
   submitHandler = (event) => {
     event.preventDefault();
-    signIn.call({
+    const fields = {
       email: this.email.input.value,
       password: this.pass.input.value,
       firstName: this.fname.input.value,
       lastName: this.lname.input.value,
-    }, (error) => {
+    };
+    if (!(this.isFieldsEmpty(fields))) {
+      notify('app-error', 'All fields are required');
+      return;
+    }
+    signIn.call(fields, (error) => {
       if (error) {
-        console.log(error);
-        Bert.alert(error.reason, 'reason');
+        notify('app-error', error.reason);
       } else {
-        Bert.alert('Account was successfully created', 'Success');
+        notify('app-success', 'Account was successfully created');
         browserHistory.push('/login');
       }
     });
   };
 
+  isFieldsEmpty = fieldsList => Object.keys(fieldsList).every(item => fieldsList[item].length);
   render() {
     return (
       <div className="form-container">

@@ -1,11 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
-import { Bert } from 'meteor/themeteorchef:bert';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 import Categories from '../../../api/categories/categories';
+import notify from '../../helpers/notification';
 import { addCategory, removeCategory } from '../../../api/categories/methods';
 import CategoriesList from './CategoriesList';
 import AddCategoryModal from './modal/AddCategoryModal';
@@ -28,7 +28,7 @@ export default class CategoriesWrap extends TrackerReact(Component) {
   modalHandleSubmit = () => {
     addCategory.call({ categoryName: this.state.inputVal }, (error) => {
       if (error) {
-        Bert.alert(error.reason, 'error');
+        notify('app-error', error.reason);
       }
     });
     this.setState({ openModal: false });
@@ -44,7 +44,7 @@ export default class CategoriesWrap extends TrackerReact(Component) {
       categoryId: id,
     }, (error) => {
       if (error) {
-        Bert.alert(error.reason, 'error');
+        notify('app-error', error.reason);
       }
     });
   };
