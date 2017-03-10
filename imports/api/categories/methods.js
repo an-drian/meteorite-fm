@@ -13,6 +13,10 @@ export const addCategory = new ValidatedMethod({
     if (!this.userId) {
       throw new Meteor.Error('addCategory', 'access-denied');
     }
+    const existCategory = Categories.findOne({ categoryName });
+    if (existCategory) {
+      throw new Meteor.Error('addCategory', 'Category with this name already exist');
+    }
     Categories.insert({ userId: this.userId, categoryName });
   },
 });
