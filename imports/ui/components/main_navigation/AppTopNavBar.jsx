@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-// import { browserHistory, Link } from 'react-router';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import { Meteor } from 'meteor/meteor';
+import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import { Link } from 'react-router';
+import { AppBar, Drawer } from 'material-ui';
+import { List, ListItem } from 'material-ui/List';
+import ListIco from 'material-ui/svg-icons/action/list';
+import QueueMusicIco from 'material-ui/svg-icons/av/queue-music';
 import UnloggedBtn from './UnloggedBtn';
+import LoggedBtn from './LoggedBtn';
+import logout from '../../../modules/logout';
 
 const unloggedButtons = [
   {
@@ -17,7 +22,7 @@ const unloggedButtons = [
 ];
 
 
-export default class AppTopNavBar extends Component {
+export default class AppTopNavBar extends TrackerReact(Component) {
   constructor() {
     super();
     this.state = {
@@ -28,6 +33,18 @@ export default class AppTopNavBar extends Component {
   leftIcoTapHandler() {
     this.setState({ leftMenuOpened: true });
   }
+  renderTopRightNav = () => {
+    if (Meteor.user()) {
+      return (
+        <LoggedBtn route="/" userName={Meteor.user().profile.firstName} label="Logout" action={logout} />
+      );
+    }
+    return (
+      unloggedButtons.map((item, index) =>
+        (<UnloggedBtn key={index} route={item.route} label={item.label} />))
+    );
+  };
+
   render() {
     return (
       <div>
@@ -35,19 +52,23 @@ export default class AppTopNavBar extends Component {
           title="Meteorite.fm"
           onLeftIconButtonTouchTap={this.leftIcoTapHandler}
         >
-          {unloggedButtons.map((item, index) => {
-            return (<UnloggedBtn key={index} route={item.route} label={item.label} />);
-          })}
+          {this.renderTopRightNav()}
         </AppBar>
         <div>
           <Drawer
             docked={false}
             width={300}
             open={this.state.leftMenuOpened}
-            onRequestChange={(leftMenuOpened) => this.setState({ leftMenuOpened })}
+            onRequestChange={(leftMenuOpened) => { this.setState({ leftMenuOpened }); }}
           >
-            <MenuItem >Menu Item</MenuItem>
-            <MenuItem >Menu Item 2</MenuItem>
+            <List>
+              <Link className="sidebar-link" to={'/categories'} >
+                <ListItem primaryText="Categories" leftIcon={<ListIco />} />
+              </Link>
+              <Link className="sidebar-link" to={'/stations'}>
+                <ListItem primaryText="Stations" leftIcon={<QueueMusicIco />} />
+              </Link>
+            </List>
           </Drawer>
         </div>
       </div>

@@ -4,10 +4,11 @@ import { Link } from 'react-router';
 
 
 export default class UnloggedBtn extends Component {
-  static muiName = 'FlatButton';
-  static styles = {
-    marginTop: '12px',
+  static propTypes = {
+    label: React.PropTypes.string,
+    route: React.PropTypes.string,
   };
+  static muiName = 'FlatButton';
   render() {
     const { label, route } = this.props;
     return (
