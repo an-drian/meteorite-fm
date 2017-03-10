@@ -1,17 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import { TextField } from 'material-ui';
+import { TextField, RaisedButton }from 'material-ui';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
-export default class AddCategoryModal extends Component {
+export default class AddStationModal extends Component {
   static propTypes = {
     open: PropTypes.bool,
     handleClose: PropTypes.func,
     handleSubmit: PropTypes.func,
-    changeHandle: PropTypes.func,
   };
   render() {
-    const { open, handleClose, handleSubmit, changeHandle } = this.props;
+    const { open, handleClose, handleSubmit } = this.props;
     const actions = [
       <FlatButton
         label="Cancel"
@@ -28,7 +27,7 @@ export default class AddCategoryModal extends Component {
     return (
       <div>
         <Dialog open={open} actions={actions} title="Create new category" onRequestClose={handleClose}>
-          <TextField fullWidth onChange={changeHandle} floatingLabelText="Category name" />
+          <TextField fullWidth floatingLabelText="Category name" />
         </Dialog>
       </div>
     );
