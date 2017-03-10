@@ -58,7 +58,7 @@ export default class CategoriesWrap extends TrackerReact(Component) {
           <CategoriesList categories={allCategories} deleteCategory={this.deleteHandle} /> :
           <CircularProgress />
         }
-        <FloatingActionButton className="add-category-btn" onTouchTap={this.modalHandleOpen}>
+        <FloatingActionButton className="add-something-btn" onTouchTap={this.modalHandleOpen}>
           <ContentAdd />
         </FloatingActionButton>
         <AddCategoryModal

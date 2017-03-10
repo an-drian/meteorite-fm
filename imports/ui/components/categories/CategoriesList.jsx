@@ -10,7 +10,6 @@ import {
 import FlatButton from 'material-ui/FlatButton';
 import DeleteIco from 'material-ui/svg-icons/action/delete';
 
-
 const CategoriesList = ({ categories, deleteCategory }) => (
   <Table selectable={false} multiSelectable={false} >
     <TableHeader displayRowCheckbox={false} displaySelectAll={false} adjustForCheckbox={false}>
@@ -25,12 +24,12 @@ const CategoriesList = ({ categories, deleteCategory }) => (
           <TableRowColumn>{category.categoryName}</TableRowColumn>
           <TableRowColumn>
             <FlatButton
-              secondary={true}
+              secondary
               disabled={category.categoryName === 'default'}
               label="Delete"
               onTouchTap={() => deleteCategory(category._id)}
             />
-            <FlatButton primary={true} disabled={category.categoryName === 'default'} label="Edit" />
+            <FlatButton primary disabled={category.categoryName === 'default'} label="Edit" />
           </TableRowColumn>
         </TableRow>
       ))}
