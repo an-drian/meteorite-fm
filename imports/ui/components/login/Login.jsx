@@ -19,12 +19,13 @@ export default class Login extends TrackerReact(Component) {
         notify('app-error', error.reason);
         return;
       }
-      browserHistory.push('/stations');
+      browserHistory.push('/my-radio');
     });
   };
   render() {
     return (
       <div className="form-container">
+        <h1 className="page-title">Login</h1>
         <form onSubmit={this.submitHandler}>
           <TextField
             style={style.formInput}
