@@ -1,0 +1,42 @@
+.add-something-btn
+  /*position fixed
+  right: 24px
+  bottom: 130px*/
+
+.categories
+  padding: 15px
+  .cat-title
+    font-size: remify(20px)
+    color: $black
+    line-height: 40px
+  .cat-row
+    position relative
+    overflow hidden
+    clear both
+    padding: 10px 0 0
+    .cat-col
+      float: left
+      box-sizing: border-box
+      &.cat-col-t
+        width: 60%
+      &.cat-col-add
+        width: 40%
+        text-align: right
+        padding-right: 6px
+  .categories-list
+    > li
+      padding: 12px 0 12px 10px
+      background-color transparent
+      transition all 0.2s
+      position relative
+      box-sizing border-box
+      &:hover
+        background-color: $main_blue3
+    .cat-del-btn
+      position absolute !important
+      right: 0
+      top: 0
+      bottom: 0
+      margin auto !important
+
+

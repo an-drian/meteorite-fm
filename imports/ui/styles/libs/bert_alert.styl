@@ -1,0 +1,17 @@
+.bert-alert[class*="growl-"]
+  border-radius: 0
+.bert-alert
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px
+  &.app-error, &.app-success
+    >.bert-container
+      > .bert-content
+        h5
+          font-weight: 600
+        p
+          color: #fff
+      .bert-gem i
+        color: #fff
+  &.app-error
+    background-color: $red
+  &.app-success
+    background-color: $main_blue2

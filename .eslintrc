@@ -1,0 +1,29 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "allowImportExportEverywhere": true
+  },
+  "plugins": [
+    "meteor",
+    "react",
+    "jsx-a11y"
+  ],
+  "extends": [
+    "airbnb",
+    "plugin:meteor/recommended",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "meteor/eventmap-params": [
+      2, { "templateInstanceParamName": "instance" }
+    ],
+    "no-use-before-define": [
+      "error", { "functions": false, "classes": true }
+    ],
+    "import/no-unresolved": "off",
+    "react/display-name": 0,
+    "import/export": "off",
+    "no-underscore-dangle": "off",
+    "react/forbid-prop-types": 0
+  }
+}

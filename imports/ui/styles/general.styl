@@ -1,0 +1,36 @@
+set-font-size(value) {
+  font-size: value; /* add PX (or original value) as backup */
+
+  if (value is inherit) {
+    /* do nothing, "inherit" has no unit */
+  } else {
+    font-size: remify(value);
+  }
+}
+
+remify(value) { /* separate mixin, so it can be used elsewhere */
+  u = unit(value);
+
+  if (u is 'px') {
+    return unit(value/16, 'rem')
+  } else {
+    return unit(value, u)
+  }
+}
+
+body, html
+  font-family: Roboto, sans-serif !important
+
+.container
+  padding-top: 20px
+  padding-left: 24px
+  padding-right: 24px
+
+.form-container
+  max-width: 400px
+  margin: 0 auto
+  
+.page-title
+  color: #000
+  margin: 10px 0 20px
+  font-size: remify(22px)
