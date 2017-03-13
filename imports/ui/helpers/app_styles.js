@@ -8,7 +8,7 @@ const appStyle = {
     accent2Color: '#FF5722',
     accent3Color: '#FF5722',
     textColor: '#757575',
-    alternateTextColor: '#212121',
+    alternateTextColor: '#FFFFFF',
     canvasColor: '#FFFFFF',
     borderColor: '#BDBDBD',
     // disabledColor: fade(darkBlack, 0.3),

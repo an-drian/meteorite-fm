@@ -27,7 +27,7 @@ export default class PlayerWrapper extends TrackerReact(Component) {
             playToggle={this.playToggle}
             changeVolume={this.changeVolume}
             isPlaying={this.state.isPlaying}
-          />;
+          />
           <audio
             src="http://stream.mjoy.ua:8000/urban-space-radio-aac"
             ref={(a) => { this.audio = a; }}

@@ -22,6 +22,12 @@ const unloggedButtons = [
   },
 ];
 
+const styles = {
+  drawer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  },
+};
+
 
 export default class AppTopNavBar extends TrackerReact(Component) {
   constructor() {
@@ -57,6 +63,7 @@ export default class AppTopNavBar extends TrackerReact(Component) {
         </AppBar>
         <div>
           <Drawer
+            containerStyle={styles.drawer}
             docked={false}
             width={350}
             open={this.state.leftMenuOpened}
