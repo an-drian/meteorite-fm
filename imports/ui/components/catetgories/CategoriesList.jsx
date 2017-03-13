@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import DeleteIco from 'material-ui/svg-icons/action/delete';
 import IconButton from 'material-ui/IconButton';
 import appStyle from '../../helpers/app_styles';
+import { Link } from 'react-router';
 
 const styles = {
   smallIcon: {
@@ -17,7 +18,7 @@ const styles = {
 
 const CategoriesList = ({ name, deleteCategory }) => (
   <li>
-    {name}
+    <Link to={`/my-radio/${name}`} >{name}</Link>
     <IconButton
       className="cat-del-btn"
       iconStyle={styles.smallIcon}
