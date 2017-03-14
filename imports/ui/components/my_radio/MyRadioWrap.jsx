@@ -27,12 +27,30 @@ export default class MyRadioWrap extends TrackerReact(Component) {
     this.setState({ openDialog: false });
   };
 
-  handleChangeInputFile = (event) => {
-    console.log(event.target.files[0]);
+  isM3uValid = (str) => {
+    const urlPattern = /(http(s)?)/gi;
+    return urlPattern.test(str);
   };
 
+  handleChangeInputFile = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      if (this.isM3uValid(evt.target.result)) {
+        this.setState({ radioUrl: evt.target.result });
+      } else {
+        notify('app-error', 'Format not supported');
+      }
+    };
+    reader.readAsText(file);
+  };
+  stationFormSubmitHandler = (name) => {
+
+    console.log(name, 'submit');
+  };
   render() {
     const { category } = this.props.params;
+    console.log(this.state.radioUrl);
     return (
       <section className="my-radio-sec">
         <h1 className="page-title">Category: {category}</h1>
@@ -44,7 +62,7 @@ export default class MyRadioWrap extends TrackerReact(Component) {
           <ContentAdd />
         </FloatingActionButton>
         <StationForm
-          handleOpen={this.handleOpenDialog}
+          handleSubmit={this.stationFormSubmitHandler}
           handleClose={this.handleCloseDialog}
           openDialog={this.state.openDialog}
           handleInputFile={this.handleChangeInputFile}
