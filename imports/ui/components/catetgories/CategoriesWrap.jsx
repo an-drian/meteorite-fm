@@ -54,7 +54,6 @@ export default class CategoriesWrap extends TrackerReact(Component) {
   render() {
     const { addEnable } = this.state;
     const categories = this.getCategories();
-    console.log(categories);
     return (
       <div className="categories">
         <AddCategoryFrom
