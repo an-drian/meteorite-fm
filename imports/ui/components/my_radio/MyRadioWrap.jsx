@@ -5,6 +5,7 @@ import notify from '../../helpers/notification';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import StationForm from './modal/StationForm';
+import { addStation } from '../../../api/stations/methods';
 
 const styles = {
   addStationDialogBtn: {
@@ -17,6 +18,9 @@ const styles = {
 export default class MyRadioWrap extends TrackerReact(Component) {
   state = {
     openDialog: false,
+    radioUrl: '',
+    fileName: null,
+    isChecked: false,
   };
 
   handleOpenDialog = () => {
@@ -27,30 +31,62 @@ export default class MyRadioWrap extends TrackerReact(Component) {
     this.setState({ openDialog: false });
   };
 
-  isM3uValid = (str) => {
-    const urlPattern = /(http(s)?)/gi;
-    return urlPattern.test(str);
+  getValidUrl = (str) => {
+    const urlPattern = /^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/igm;
+    return str.match(urlPattern);
+  };
+  checkboxToggle = (event, fileInput, manualUrlInput) => {
+    const isChecked = event.target.checked;
+    console.log(manualUrlInput, 'val');
+    if (event.target.checked) {
+      fileInput.value = '';
+      this.setState({ isChecked, radioUrl: '', fileName: null });
+    } else {
+      manualUrlInput.input.value = '';
+      this.setState({ isChecked });
+    }
   };
 
   handleChangeInputFile = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      if (this.isM3uValid(evt.target.result)) {
-        this.setState({ radioUrl: evt.target.result });
-      } else {
-        notify('app-error', 'Format not supported');
-      }
-    };
-    reader.readAsText(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const radioUrl = this.getValidUrl(evt.target.result);
+        console.log(radioUrl, 'radio url');
+        if (radioUrl) {
+          this.setState({ radioUrl: radioUrl[0], fileName: file.name });
+        } else {
+          notify('app-error', 'Format not supported');
+        }
+      };
+      reader.readAsText(file);
+    }
   };
-  stationFormSubmitHandler = (name) => {
 
-    console.log(name, 'submit');
+  stationFormSubmitHandler = (name, manualRadioUrl) => {
+    const params = {
+      categoryName: this.props.params.category,
+      stationsName: name,
+    };
+    const radioUrl = this.getValidUrl(manualRadioUrl); // array
+    if (manualRadioUrl && radioUrl) {
+      params.stationsUrl = manualRadioUrl;
+    } else {
+      params.stationsUrl = this.state.radioUrl;
+    }
+    console.log(params, 'submit');
+    addStation.call(params, (error) => {
+      if (error) {
+        notify('app-error', error.reason);
+        return;
+      }
+      notify('app-success', 'Station has been saved');
+    });
   };
+
   render() {
     const { category } = this.props.params;
-    console.log(this.state.radioUrl);
     return (
       <section className="my-radio-sec">
         <h1 className="page-title">Category: {category}</h1>
@@ -67,6 +103,9 @@ export default class MyRadioWrap extends TrackerReact(Component) {
           openDialog={this.state.openDialog}
           handleInputFile={this.handleChangeInputFile}
           categoryName={category}
+          fileName={this.state.fileName}
+          checkboxToggle={this.checkboxToggle}
+          isChecked={this.state.isChecked}
         />
       </section>
     );

@@ -7,14 +7,14 @@ import Stations from './stations';
 export const addStation = new ValidatedMethod({
   name: 'addStation',
   validate: new SimpleSchema({
-    categoryName: { type: String },
+    categoryName: { type: String, min: 1 },
+    stationsName: { type: String, min: 1 },
+    stationsUrl: { type: SimpleSchema.RegEx.Url },
   }).validator(),
-  run({ categoryName }) {
-
+  run({ categoryName, stationsName, stationsUrl }) {
+    console.log(categoryName, stationsName, stationsUrl, 'm');
   },
 });
-
-
 
 const INVITES_METHODS = _.pluck([addStation], 'name');
 
