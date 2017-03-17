@@ -24,7 +24,7 @@ export default class Login extends TrackerReact(Component) {
   };
   render() {
     return (
-      <div className="form-container">
+      <div className="account-form-container">
         <h1 className="page-title">Login</h1>
         <form onSubmit={this.submitHandler}>
           <TextField

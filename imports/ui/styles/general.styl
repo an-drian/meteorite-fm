@@ -19,7 +19,7 @@ remify(value) { /* separate mixin, so it can be used elsewhere */
 }
 
 html
-  background: url('/img/radio5-bg-full.jpg') no-repeat center center fixed
+  background: url('/img/radio3-bg-full.jpg') no-repeat center center fixed
   -webkit-background-size: cover
   -moz-background-size: cover
   -o-background-size: cover
@@ -34,11 +34,16 @@ body, html
   padding-right: 24px
   padding-bottom: 120px
 
-.form-container
+.account-form-container
   max-width: 400px
   margin: 0 auto
-  
+  padding: 24px
+  background-color: $opacity_white
+  box-shadow $box_shadow
+
 .page-title
-  color: #000
-  margin: 10px 0 20px
+  color: $main_blue2
+  border-bottom: 1px solid $main_blue2
+  padding: 10px 0 20px
+  text-transform: uppercase
   font-size: remify(22px)
