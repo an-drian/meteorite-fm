@@ -41,7 +41,8 @@ export default class SignInWrap extends TrackerReact(Component) {
   isFieldsEmpty = fieldsList => Object.keys(fieldsList).every(item => fieldsList[item].length);
   render() {
     return (
-      <div className="form-container">
+      <div className="account-form-container">
+        <h1 className="page-title">Sign up</h1>
         <form onSubmit={this.submitHandler}>
           <div>
             <TextField
