@@ -16,9 +16,9 @@ const styles = {
   },
 };
 
-const CategoriesList = ({ name, deleteCategory }) => (
+const CategoriesList = ({ id, name, deleteCategory }) => (
   <li>
-    <Link to={`/my-radio/${name}`} >{name}</Link>
+    <Link to={`/my-radio/${id}`} >{name}</Link>
     <IconButton
       className="cat-del-btn"
       iconStyle={styles.smallIcon}
@@ -34,6 +34,7 @@ const CategoriesList = ({ name, deleteCategory }) => (
 CategoriesList.propTypes = {
   name: PropTypes.string,
   deleteCategory: PropTypes.func,
+  id: PropTypes.string,
 };
 
 export default CategoriesList;

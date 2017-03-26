@@ -48,6 +48,7 @@ export default class CategoriesWrap extends TrackerReact(Component) {
     return categories.map(item => <CategoriesList
       key={item._id}
       name={item.categoryName}
+      id={item._id}
       deleteCategory={() => this.deleteHandle(item._id)}
     />);
   };
