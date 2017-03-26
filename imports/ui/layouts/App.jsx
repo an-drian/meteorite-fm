@@ -17,7 +17,6 @@ const App = ({ children }) => (
     <div>
       <AppTopNavBar />
       <div className="container">{children}</div>
-      <PlayerWrapper />
     </div>
   </MuiThemeProvider>
 );

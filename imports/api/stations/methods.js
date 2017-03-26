@@ -3,18 +3,29 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import Stations from './stations';
+import Categories from '../categories/categories';
 
 export const addStation = new ValidatedMethod({
   name: 'addStation',
   validate: new SimpleSchema({
-    categoryName: { type: String, min: 1 },
+    categoryId: { type: SimpleSchema.RegEx.Id },
     stationsName: { type: String, min: 1 },
     stationsUrl: { type: SimpleSchema.RegEx.Url },
   }).validator(),
-  run({ categoryName, stationsName, stationsUrl }) {
-    console.log(categoryName, stationsName, stationsUrl, 'm');
+  run({ categoryId, stationsName, stationsUrl }) {
+    if (!this.userId) {
+      throw new Meteor.Error('access-denied', 'you need sign in');
+    }
+    const thisCategory = Categories.findOne({ _id: categoryId, userId: this.userId });
+    if (!thisCategory) {
+      throw new Meteor.Error('error', 'You can`t add station without category');
+    }
+    Stations.insert({
+      categoryId, stationsName, stationsUrl, userId: this.userId,
+    });
   },
 });
+
 
 const INVITES_METHODS = _.pluck([addStation], 'name');
 

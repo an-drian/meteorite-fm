@@ -1,10 +1,7 @@
 import React from 'react';
-import PlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled';
-import PauseCircleFilled from 'material-ui/svg-icons/av/pause-circle-filled';
 import AvVolumeUp from 'material-ui/svg-icons/av/volume-up';
-import IconButton from 'material-ui/IconButton';
 import Slider from 'material-ui/Slider';
-// import muiThemeable from 'material-ui/styles/muiThemeable';
+import PlayButton from './PlayButton';
 
 const styles = {
   iconBtn: {
@@ -23,12 +20,11 @@ const Player = ({ playToggle, isPlaying, changeVolume }) => (
       left
     </div>
     <div className="mid-pl ay-col play-col">
-      <IconButton style={styles.iconBtn} className="play-btn" onTouchTap={playToggle}>
-        {isPlaying ?
-          <PauseCircleFilled color={'#00BCD4'} className="play-ico" /> :
-          <PlayCircleFilled color={'#00BCD4'} className="play-ico" />
-        }
-      </IconButton>
+      <PlayButton
+        playToggleHandler={playToggle}
+        isPlaying={isPlaying}
+        icoBtnStyles={styles.iconBtn}
+      />
     </div>
     <div className="right-play-col play-col">
       <div className="volume-box">
