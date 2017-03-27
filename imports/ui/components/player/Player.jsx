@@ -21,7 +21,7 @@ const Player = ({ playToggle, isPlaying, changeVolume }) => (
     </div>
     <div className="mid-pl ay-col play-col">
       <PlayButton
-        playToggleHandler={playToggle}
+        playToggleHandler={() => playToggle()}
         isPlaying={isPlaying}
         icoBtnStyles={styles.iconBtn}
       />

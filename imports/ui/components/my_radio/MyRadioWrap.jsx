@@ -27,11 +27,11 @@ export default class MyRadioWrap extends TrackerReact(Component) {
     super(props);
     this.state = {
       openDialog: false,
-      radioUrl: 'http://95.211.217.163:8881/radio/192/',
+      radioUrl: '',
       fileName: null,
       isChecked: false,
       isPlaying: false,
-      nowPlayingUrl: '',
+      nowPlayingUrl: 'http://95.211.217.163:8881/radio/192/',
       subscriptions: {
         stations: Meteor.subscribe('categoryStations', props.params.categoryId, 20),
       },
@@ -49,23 +49,22 @@ export default class MyRadioWrap extends TrackerReact(Component) {
       },
     });
   }
-  handleOpenDialog = () => {
-    this.setState({ openDialog: true });
-  };
-
-  handleCloseDialog = () => {
-    this.setState({ openDialog: false });
-  };
-  togglePlayState = () => {
-    this.setState({ isPlaying: !this.state.isPlaying });
-  };
-  playToggle = () => {
-    if (this.audio.paused) {
-      this.audio.play();
-    } else {
+  handleOpenDialog = () => this.setState({ openDialog: true });
+  handleCloseDialog = () => this.setState({ openDialog: false });
+  togglePlayState = () => this.setState({ isPlaying: !this.audio.paused });
+  togglePlay = () => {
+    if (this.state.isPlaying) {
       this.audio.pause();
+    } else {
+      this.audio.play();
     }
     this.togglePlayState();
+  };
+  pressSpaceHandler = (event) => {
+    event.preventDefault();
+    if (event.keyCode === 32) {
+      this.togglePlay();
+    }
   };
   changeVolume = (event, newValue) => {
     this.audio.volume = newValue;
@@ -101,6 +100,11 @@ export default class MyRadioWrap extends TrackerReact(Component) {
     }
   };
 
+  selectStation = (url) => {
+    this.audio.pause();
+    this.setState({ nowPlayingUrl: url, isPlaying: true }, () => this.audio.play());
+  };
+
   stationFormSubmitHandler = (name, manualRadioUrl) => {
     const params = {
       categoryId: this.props.params.categoryId,
@@ -112,8 +116,6 @@ export default class MyRadioWrap extends TrackerReact(Component) {
     } else {
       params.stationsUrl = this.state.radioUrl;
     }
-
-    console.log(params, 'params');
     addStation.call(params, (error) => {
       if (error) {
         notify('app-error', error.reason);
@@ -123,22 +125,34 @@ export default class MyRadioWrap extends TrackerReact(Component) {
       notify('app-success', 'Station has been saved');
     });
   };
-  componentWillUnmount() {
-    this.state.subscriptions.stations.stop();
-  }
   getStations = () => Stations.find().fetch();
   renderRadioList = () => {
     const stations = this.getStations();
+    const { isPlaying, nowPlayingUrl } = this.state;
     console.log(stations, 'stations');
     if (this.state.subscriptions.stations.ready()) {
-      return <RadioStationsList stations={stations} />;
+      return (<RadioStationsList
+        stations={stations}
+        isPlaying={isPlaying}
+        selectStation={this.selectStation}
+        nowPlaying={nowPlayingUrl}
+      />);
     }
     return <CircularProgress />;
   };
+  componentWillUnmount() {
+    this.state.subscriptions.stations.stop();
+    window.addEventListener('keydown');
+
+  }
+  componentDidMount() {
+    window.addEventListener('keydown', this.pressSpaceHandler);
+  }
   render() {
     const { categoryId } = this.props.params;
     const category = Categories.findOne(categoryId) || {};
     const categoryName = category.categoryName;
+    console.log(this.state);
     return (
       <div>
         <section className="my-radio-sec">
@@ -163,16 +177,15 @@ export default class MyRadioWrap extends TrackerReact(Component) {
           />
         </section>
         <PlayerWrapper
-          togglePlayState={this.togglePlayState}
+          playToggle={this.togglePlay}
           radioUrl={this.state.nowPlayingUrl}
           isPlaying={this.state.isPlaying}
-          playToggle={this.playToggle}
           changeVolume={this.changeVolume}
         />
         <audio
           controls="controls"
-          src={this.state.radioUrl}
           ref={(a) => { this.audio = a; }}
+          src={this.state.nowPlayingUrl}
         />
       </div>
     );
