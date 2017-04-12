@@ -33,19 +33,19 @@ export default class MyRadioWrap extends TrackerReact(Component) {
       isPlaying: false,
       nowPlayingUrl: 'http://95.211.217.163:8881/radio/192/',
       subscriptions: {
-        stations: Meteor.subscribe('categoryStations', props.params.categoryId, 20),
+        stations: Meteor.subscribe('categoryStations', props.params.categoryName, 20),
       },
     };
   }
   componentWillReceiveProps(nextProps) {
-    const { categoryId } = this.props.params;
-    if (categoryId === nextProps.params.categoryId) {
+    const { categoryName } = this.props.params;
+    if (categoryName === nextProps.params.categoryName) {
       return;
     }
     this.state.subscriptions.stations.stop();
     this.setState({
       subscriptions: {
-        stations: Meteor.subscribe('categoryStations', nextProps.params.categoryId, 20),
+        stations: Meteor.subscribe('categoryStations', nextProps.params.categoryName, 20),
       },
     });
   }
@@ -61,8 +61,8 @@ export default class MyRadioWrap extends TrackerReact(Component) {
     this.togglePlayState();
   };
   pressSpaceHandler = (event) => {
-    event.preventDefault();
-    if (event.keyCode === 32) {
+    if (event.keyCode === 32 && event.target.nodeName === 'BODY') {
+      event.preventDefault();
       this.togglePlay();
     }
   };
@@ -106,8 +106,9 @@ export default class MyRadioWrap extends TrackerReact(Component) {
   };
 
   stationFormSubmitHandler = (name, manualRadioUrl) => {
+    const category = Categories.findOneByName(this.props.params.categoryName);
     const params = {
-      categoryId: this.props.params.categoryId,
+      categoryId: category._id,
       stationsName: name,
     };
     const radioUrl = this.getValidUrl(manualRadioUrl); // array
@@ -129,7 +130,6 @@ export default class MyRadioWrap extends TrackerReact(Component) {
   renderRadioList = () => {
     const stations = this.getStations();
     const { isPlaying, nowPlayingUrl } = this.state;
-    console.log(stations, 'stations');
     if (this.state.subscriptions.stations.ready()) {
       return (<RadioStationsList
         stations={stations}
@@ -142,17 +142,14 @@ export default class MyRadioWrap extends TrackerReact(Component) {
   };
   componentWillUnmount() {
     this.state.subscriptions.stations.stop();
-    window.addEventListener('keydown');
-
+    window.removeEventListener('keydown');
   }
   componentDidMount() {
     window.addEventListener('keydown', this.pressSpaceHandler);
   }
   render() {
-    const { categoryId } = this.props.params;
-    const category = Categories.findOne(categoryId) || {};
-    const categoryName = category.categoryName;
-    console.log(this.state);
+    const { categoryName } = this.props.params;
+
     return (
       <div>
         <section className="my-radio-sec">
