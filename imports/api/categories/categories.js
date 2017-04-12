@@ -19,5 +19,6 @@ Categories.schema = new SimpleSchema({
   },
 });
 
+Categories.findOneByName = name => Categories.findOne({ categoryName: name });
 Categories.attachSchema(Categories.schema);
 export default Categories;

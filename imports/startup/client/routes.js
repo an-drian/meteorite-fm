@@ -20,8 +20,7 @@ Meteor.startup(() => {
         <IndexRoute name="index" component={IndexWrapper} />
         <Route name="login" path="/login" component={Login} />
         <Route name="sign-in" path="/sign-in" component={SignInWrap} />
-        <Route name="my-radio" path="/my-radio" component={MyRadioWrap} onEnter={requireAuth} />
-        <Route name="my-radio" path="/my-radio/:categoryId" component={MyRadioWrap} onEnter={requireAuth} />
+        <Route name="my-radio" path="/my-radio/:categoryName" component={MyRadioWrap} onEnter={requireAuth} />
         <Route path="*" component={NotFound} />x
       </Route>
     </Router>,

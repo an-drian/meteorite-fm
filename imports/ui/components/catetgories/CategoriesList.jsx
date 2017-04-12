@@ -18,7 +18,7 @@ const styles = {
 
 const CategoriesList = ({ id, name, deleteCategory }) => (
   <li>
-    <Link to={`/my-radio/${id}`} >{name}</Link>
+    <Link to={`/my-radio/${name}`} >{name}</Link>
     <IconButton
       className="cat-del-btn"
       iconStyle={styles.smallIcon}

@@ -35,7 +35,7 @@ export const signIn = new ValidatedMethod({
 
 Meteor.users.after.insert((userId, doc) => {
   check(doc._id, String);
-  Categories.insert({ userId: doc._id, categoryName: 'default' }, (error) => { console.log(error)});
+  Categories.insert({ userId: doc._id, categoryName: 'default' }, error => console.log(error));
 });
 
 const INVITES_METHODS = _.pluck([signIn], 'name');

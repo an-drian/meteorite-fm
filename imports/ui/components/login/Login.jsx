@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import { browserHistory } from 'react-router';
 import { TextField, RaisedButton } from 'material-ui';
-import notify from '../../helpers/notification'
+import notify from '../../helpers/notification';
 import logIn from '../../../modules/login';
 
 const style = {
@@ -19,7 +19,7 @@ export default class Login extends TrackerReact(Component) {
         notify('app-error', error.reason);
         return;
       }
-      browserHistory.push('/my-radio');
+      browserHistory.push('/my-radio/default');
     });
   };
   render() {
