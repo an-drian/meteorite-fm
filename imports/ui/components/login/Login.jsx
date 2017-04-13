@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import { browserHistory } from 'react-router';
-import { Bert } from 'meteor/themeteorchef:bert';
 import { TextField, RaisedButton } from 'material-ui';
+import notify from '../../helpers/notification';
 import logIn from '../../../modules/login';
 
 const style = {
@@ -16,15 +16,16 @@ export default class Login extends TrackerReact(Component) {
     event.preventDefault();
     logIn(this.email.input.value, this.pass.input.value, (error) => {
       if (error) {
-        Bert.alert(error.reason, 'reason');
+        notify('app-error', error.reason);
         return;
       }
-      browserHistory.push('/stations');
+      browserHistory.push('/my-radio/default');
     });
   };
   render() {
     return (
-      <div className="form-container">
+      <div className="account-form-container">
+        <h1 className="page-title">Login</h1>
         <form onSubmit={this.submitHandler}>
           <TextField
             style={style.formInput}

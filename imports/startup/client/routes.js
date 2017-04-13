@@ -10,8 +10,7 @@ import { NotFound } from '../../ui/pages/NotFound';
 
 import Login from '../../ui/components/login/Login';
 import SignInWrap from '../../ui/components/sign_in/SignInWrap';
-import StationsWrap from '../../ui/components/stations/StationsWrap';
-import CategoriesWrap from '../../ui/components/categories/CategoriesWrap';
+import MyRadioWrap from '../../ui/components/my_radio/MyRadioWrap';
 
 Meteor.startup(() => {
   render(
@@ -20,8 +19,7 @@ Meteor.startup(() => {
         <IndexRoute name="index" component={IndexWrapper} />
         <Route name="login" path="/login" component={Login} />
         <Route name="sign-in" path="/sign-in" component={SignInWrap} />
-        <Route name="stations" path="/stations" component={StationsWrap} onEnter={requireAuth} />
-        <Route name="stations" path="/categories" component={CategoriesWrap} onEnter={requireAuth} />
+        <Route name="my-radio" path="/my-radio/:categoryName" component={MyRadioWrap} onEnter={requireAuth} />
         <Route path="*" component={NotFound} />x
       </Route>
     </Router>,

@@ -7,6 +7,7 @@ import { List, ListItem } from 'material-ui/List';
 import ListIco from 'material-ui/svg-icons/action/list';
 import QueueMusicIco from 'material-ui/svg-icons/av/queue-music';
 import UnloggedBtn from './UnloggedBtn';
+import CategoriesWrap from '../catetgories/CategoriesWrap';
 import LoggedBtn from './LoggedBtn';
 import logout from '../../../modules/logout';
 
@@ -20,6 +21,12 @@ const unloggedButtons = [
     label: 'Sign in',
   },
 ];
+
+const styles = {
+  drawer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  },
+};
 
 
 export default class AppTopNavBar extends TrackerReact(Component) {
@@ -56,19 +63,13 @@ export default class AppTopNavBar extends TrackerReact(Component) {
         </AppBar>
         <div>
           <Drawer
+            containerStyle={styles.drawer}
             docked={false}
-            width={300}
+            width={350}
             open={this.state.leftMenuOpened}
             onRequestChange={(leftMenuOpened) => { this.setState({ leftMenuOpened }); }}
           >
-            <List>
-              <Link className="sidebar-link" to={'/categories'} >
-                <ListItem primaryText="Categories" leftIcon={<ListIco />} />
-              </Link>
-              <Link className="sidebar-link" to={'/stations'}>
-                <ListItem primaryText="Stations" leftIcon={<QueueMusicIco />} />
-              </Link>
-            </List>
+            <CategoriesWrap />
           </Drawer>
         </div>
       </div>
